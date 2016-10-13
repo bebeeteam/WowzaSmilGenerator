@@ -40,22 +40,25 @@ public class DynamicMediaListProvider implements IMediaListProvider
 		this.mediaVideoMap = mediavideomap;
 	}
 	
-	@Override
-	public MediaList resolveMediaList(IMediaListReader medialistreader, IMediaStream stream, String streamName)
+	public MediaList resolveMediaList(IMediaListReader medialistreader, IMediaStream stream, String paramsString)
 	{	
-		String genericTemplate = this.appIns.getStreamStorageDir()+"/"+streamName+"_template.xml";
+		String[] params = paramsString.split("_");
+				
+		if (params.length != 2) {
+			return null;
+		}
+		
+		String streamName = params[0];
+		String templateName = params[1];
+		
+		String genericTemplate = this.appIns.getStreamStorageDir()+"/"+templateName+"-template.xml";
 		File templateFile = null;
 		
 		templateFile = new File(genericTemplate);
 		if ( !templateFile.exists() )
 		{
-			genericTemplate = this.appIns.getStreamStorageDir()+"/amlst_template.xml";
-			templateFile = new File(genericTemplate);
-			if ( !templateFile.exists() )
-			{
-				WMSLoggerFactory.getLogger(null).info("Templates not found, tried "+streamName+"_template.xml and amlst_template.xml");
-				return null;
-			}
+			WMSLoggerFactory.getLogger(null).error("Templates not found, tried "+templateName+"-template.xml");
+			return null;
 		}
 		
 		List<RenditionItem> renditionList = new ArrayList<RenditionItem>();
