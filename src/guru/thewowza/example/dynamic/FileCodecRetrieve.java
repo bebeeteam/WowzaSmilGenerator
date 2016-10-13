@@ -160,7 +160,7 @@ public class FileCodecRetrieve implements ICodecInfoRetrieve
 		rendition.setWidth(getVideoCodec().getFrameWidth());
 		rendition.setHeight(getVideoCodec().getFrameHeight());
 		rendition.setAudioCodecId(getAudioCodec().toCodecsStr());
-		rendition.setVideoCodecId(getVideoCodec().toCodecsStr());
+		//rendition.setVideoCodecId(getVideoCodec().toCodecsStr());
 		
 		if ( this.itemRendition.getLanguage().length()> 0)
 			rendition.setLanguage(this.itemRendition.getLanguage());
